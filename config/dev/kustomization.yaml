@@ -1,0 +1,19 @@
+resources:
+- ../default
+
+patches:
+- patch: |
+    - op: "add"
+      path: "/webhooks/0/clientConfig/url"
+      value: "https://10.204.118.218:9443/mutate-elasticweb-com-bolingcavalry-v1-elasticweb"
+  target:
+    kind: MutatingWebhookConfiguration
+- patch: |
+    - op: "add"
+      path: "/webhooks/0/clientConfig/url"
+      value: "https://10.204.118.218:9443/validate-elasticweb-com-bolingcavalry-v1-elasticweb"
+  target:
+    kind: ValidatingWebhookConfiguration
+- path: webhook_patch.yaml
+  target:
+    group: admissionregistration.k8s.io
