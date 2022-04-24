@@ -117,6 +117,17 @@ kubebuilder create api --group webapp --version v1 --kind Guestbook
 └── PROJECT
 ```
 
+### 权限
+
+kubebuilder提供的权限对于[RBAC ClusterRole](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#role-and-clusterrole)的生成,你的Controller需要通过 **标识代码**来进行授权,如下所示
+
+我们来对 Depolyment 和 service 进行资源操作权限的授权,在kubebuilder中想要了解更多多相关标识可[前往](https://book.kubebuilder.io/reference/markers.html)
+
+```
+// +kubebuilder:rbac:groups=apps,resources=deployments,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=core,resources=services,verbs=get;list;watch;create;update;patch;delete
+```
+
 ### 业务逻辑设计
 
 ![](https://img-blog.csdnimg.cn/20210217173845501.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JvbGluZ19jYXZhbHJ5,size_16,color_FFFFFF,t_70#crop=0&crop=0&crop=1&crop=1&id=ViTX8&originHeight=871&originWidth=731&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=)
