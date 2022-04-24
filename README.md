@@ -10,11 +10,33 @@
 
 创建crd时，k8s会通过Apiserver，在etcd中注册一种新的资源类型，Operator通过监听etcd的watch事件感知资源对象的变化，并根据业务逻辑执行对应的操作，以保证应用处于预期的状态
 
-### 本次演示环境
+### 开发环境
+
+#### 环境信息
 
 -  centos7 
--  KubeBuilder Version2.3.1 
+-  kubebuilder Version2.3.1 
 -  go1.15.6 linux/amd64 
+
+#### 工具
+
+> 由于目前kubebuilder仅提供了Linux和Mac的版本,而笔者使用的win系统,因此需要通过远程开发的模式来调试代码,开发的IDE为: vscode
+
+安装vscode完毕,可以到在线商店选择远程开发工具进行安装,详情可通过 [传送门](https://code.visualstudio.com/docs/remote/remote-overview) 了解
+
+vscode提供了三种远程开发的扩展包的使用步骤和流程,你可以根据自身情况选择任一开发模式,笔者使用的是远程SSH的开发模式
+
+- [Remote - SSH](https://code.visualstudio.com/docs/remote/ssh) - 使用SSH连接远程机器/虚拟机开发
+- [Remote - Containers](https://code.visualstudio.com/docs/remote/containers) - 基于容器的应用程序开发
+- [Remote - WSL](https://code.visualstudio.com/docs/remote/wsl) - 基于windows linux子系统下的开发
+
+## 实战
+
+### 为什么选择kubebuilder进行开发?
+
+在开始开发之前,我想说说为什么选择kubebuilder作为我们的开发脚手架,截止笔者开发时,主流的k8s二次开发脚手架主要是 **[kubebuilder](https://github.com/kubernetes-sigs/kubebuilder)**和**[operator-sdk](https://github.com/operator-framework/operator-sdk)**
+
+二者没有核心的区别,本质上都是使用官方的controller-tools 和 controller-runtime,只不过实现的细节稍有不同,比如 kubebuilder 有着更为完善的测试与部署以及代码生成的脚手架等；而 operator-sdk 对 ansible operator 这类上层操作的支持更好一些, kubebuilder出自k8s sig社区,并且两个框架的团队已经达成一致目标,未来将进行代码整合, kubebuilder 将会合并 operator-sdk 的功能具体 [详情](https://github.com/kubernetes-sigs/kubebuilder/projects/7)
 
 ### 项目初始化
 
@@ -94,8 +116,6 @@ kubebuilder create api --group webapp --version v1 --kind Guestbook
 ├── Makefile
 └── PROJECT
 ```
-
-## 实战
 
 ### 业务逻辑设计
 
@@ -1192,7 +1212,11 @@ Events:             <none>
 
 ## 参考资料：
 
+> 以下是我在开发过程中参考的资料,大家也可自行翻阅,笔者在开发过程中,发现kubebuilder又或者说k8s二次开发的中文资料非常匮乏,甚至外文资料也较少,大多数资料内容重复雷同又或是浅尝辄止
+
 k8s官网admissionhook介绍 - https://kubernetes.io/zh/docs/reference/access-authn-authz/extensible-admission-controllers/
+
+kubebuilder官网 - https://book.kubebuilder.io/
 
 kubebuilder中文官网翻译 - https://xuejipeng.github.io/kubebuilder-doc-cn/cronjob-tutorial/webhook-implementation.html
 
